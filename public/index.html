@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Grader-KaK</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background:#f8fafc; color:#0f172a; }
+    .card { background:#fff; border:1px solid #e5e7eb; border-radius:16px; }
+    .cm-editor { border:1px solid #e5e7eb; border-radius:12px; }
+    .editor-wrap { min-height: 420px; }
+    .dot{ width:10px; height:10px; border-radius:9999px; display:inline-block; margin-right:6px; vertical-align:middle;}
+    .d-red{background:#ef4444}.d-yellow{background:#f59e0b}.d-green{background:#10b981}.d-gray{background:#9ca3af}
+    a.link{color:#2563eb; text-decoration:underline;}
+  </style>
+
+  <!-- CodeMirror 6 -->
+  <script type="module">
+    import { EditorState } from "https://esm.sh/@codemirror/state";
+    import { EditorView, keymap } from "https://esm.sh/@codemirror/view";
+    import { defaultKeymap, indentWithTab } from "https://esm.sh/@codemirror/commands";
+    import { basicSetup } from "https://esm.sh/codemirror";
+    import { cpp } from "https://esm.sh/@codemirror/lang-cpp";
+    import { python } from "https://esm.sh/@codemirror/lang-python";
+
+    function langExt(lang){ return lang === 'py' ? python() : cpp(); }
+
+    window.buildEditor = (mount, lang='cpp') => {
+      mount.innerHTML = '';
+      mount.classList.add('editor-wrap');
+      const view = new EditorView({
+        state: EditorState.create({
+          doc: "",
+          extensions: [basicSetup, keymap.of([indentWithTab, ...defaultKeymap]), langExt(lang)]
+        }),
+        parent: mount
+      });
+      return view;
+    };
+
+    window.switchLanguage = (view, lang) => {
+      const pos = view.state.selection.main;
+      view.dispatch({
+        effects: EditorState.reconfigure.of([basicSetup, keymap.of([indentWithTab, ...defaultKeymap]), langExt(lang)])
+      });
+      view.dispatch({ selection: { anchor: pos.from, head: pos.to } });
+    };
+  </script>
+</head>
+<body>
+  <!-- NAV -->
+  <nav id="nav" class="hidden bg-white border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
+      <div class="font-bold text-lg">Grader-KaK</div>
+      <button data-goto="projects" class="px-3 py-1 rounded-lg border">Projects</button>
+      <button data-goto="subs" class="px-3 py-1 rounded-lg border">My Submissions</button>
+      <button id="navAdmin" class="px-3 py-1 rounded-lg border hidden">Admin</button>
+      <div class="flex-1"></div>
+      <span id="who" class="text-sm opacity-80"></span>
+      <button id="logoutBtn" class="ml-2 px-3 py-1 rounded-lg border">Logout</button>
+    </div>
+  </nav>
+
+  <!-- LOGIN -->
+  <section id="loginSection" class="min-h-[80vh] flex items-center justify-center">
+    <div class="card w-full max-w-sm p-6">
+      <h2 class="text-xl font-semibold mb-3">เข้าสู่ระบบ</h2>
+      <form id="loginForm" class="space-y-3">
+        <input class="w-full px-3 py-2 rounded-lg border" name="username" placeholder="ชื่อผู้ใช้" required />
+        <input class="w-full px-3 py-2 rounded-lg border" name="password" type="password" placeholder="รหัสผ่าน" required />
+        <button class="w-full px-3 py-2 rounded-lg bg-slate-900 text-white">Login</button>
+        <p id="loginMsg" class="text-sm text-rose-600"></p>
+      </form>
+      <div class="mt-4 text-center">
+        <button id="gotoRegister" class="px-3 py-1 rounded-lg border">สมัครสมาชิก</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTER -->
+  <section id="registerSection" class="hidden min-h-[80vh] flex items-center justify-center">
+    <div class="card w-full max-w-sm p-6">
+      <h2 class="text-xl font-semibold mb-3">สมัครสมาชิก</h2>
+      <form id="regForm" class="space-y-3">
+        <input class="w-full px-3 py-2 rounded-lg border" name="username" placeholder="ชื่อผู้ใช้" required />
+        <input class="w-full px-3 py-2 rounded-lg border" name="password" type="password" placeholder="รหัสผ่าน (ต้องมีตัวเลข)" required />
+        <input class="w-full px-3 py-2 rounded-lg border" name="confirm" type="password" placeholder="ยืนยันรหัสผ่าน" required />
+        <button class="w-full px-3 py-2 rounded-lg bg-emerald-600 text-white">สมัครสมาชิก</button>
+        <p id="regMsg" class="text-sm text-rose-600"></p>
+      </form>
+      <div class="mt-4 text-center">
+        <button id="backToLogin" class="px-3 py-1 rounded-lg border">กลับไปเข้าสู่ระบบ</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS PAGE -->
+  <section id="projectsPage" class="hidden">
+    <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
+      <div class="card p-4">
+        <div class="flex items-center gap-3">
+          <label class="font-medium">เลือกโปรเจกต์:</label>
+          <select id="projSelect" class="px-3 py-2 rounded-lg border min-w-[280px]"></select>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4" id="problemsWrap"></div>
+    </div>
+  </section>
+
+  <!-- PROBLEM PAGE -->
+  <section id="problemPage" class="hidden">
+    <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
+      <button id="backToProjects" class="px-3 py-1 rounded-lg border">← กลับ Projects</button>
+      <div id="pbHeader" class="text-xl font-semibold"></div>
+      <div class="grid lg:grid-cols-2 gap-4">
+        <div class="card p-3">
+          <div class="flex items-center justify-between mb-2">
+            <div class="font-medium opacity-80">โจทย์ (PDF)</div>
+            <a id="pdfOpenNew" class="link" href="#" target="_blank">เปิดในแท็บใหม่</a>
+          </div>
+          <div style="width:100%; height:80vh;">
+            <iframe id="pdfFrame" class="w-full h-full rounded-lg border" src=""></iframe>
+          </div>
+        </div>
+        <div class="card p-3 space-y-2">
+          <div class="flex items-center gap-2">
+            <label>ภาษา:</label>
+            <select id="langSel" class="px-2 py-1 rounded-lg border">
+              <option value="cpp">C++</option>
+              <option value="py">Python</option>
+            </select>
+            <input type="file" id="codeFile" class="ml-auto">
+            <button id="useFile" class="px-3 py-1 rounded-lg border">นำโค้ดจากไฟล์</button>
+          </div>
+          <div id="editorMount"></div>
+          <div class="flex items-center gap-2">
+            <button id="submitBtn" class="px-4 py-2 rounded-lg bg-indigo-600 text-white">ส่งคำตอบ</button>
+            <span id="submitMsg" class="text-sm opacity-80"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBMISSIONS PAGE -->
+  <section id="subsPage" class="hidden">
+    <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
+      <h2 class="text-xl font-semibold">ประวัติการส่ง</h2>
+      <div id="subsWrap" class="space-y-2"></div>
+    </div>
+  </section>
+
+  <!-- ADMIN PAGE -->
+  <section id="adminPage" class="hidden">
+    <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="card p-3">
+          <h3 class="font-semibold mb-2">สร้างโปรเจกต์</h3>
+          <input id="projName" class="w-full mb-2 px-3 py-2 rounded-lg border" placeholder="ชื่อโปรเจกต์">
+          <input id="projSlug" class="w-full mb-2 px-3 py-2 rounded-lg border" placeholder="slug (unique)">
+          <label class="inline-flex items-center gap-2 mb-2">
+            <input id="projEnabled" type="checkbox" class="scale-110"> เปิดใช้งาน
+          </label>
+          <button id="createProj" class="px-3 py-1 rounded-lg bg-emerald-600 text-white">สร้าง</button>
+          <div id="projList" class="mt-3 text-sm"></div>
+        </div>
+
+        <div class="card p-3">
+          <h3 class="font-semibold mb-2">สร้างโจทย์</h3>
+          <input id="pbTitle" class="w-full mb-2 px-3 py-2 rounded-lg border" placeholder="ชื่อโจทย์">
+          <select id="pbProject" class="w-full mb-2 px-3 py-2 rounded-lg border"></select>
+          <p class="text-sm opacity-80 mb-1">Testcases (1 บรรทัด/เคส): <code>input =&gt; expected</code></p>
+          <textarea id="pbTests" class="w-full h-32 mb-2 px-3 py-2 rounded-lg border" placeholder="เช่น 3\n1 2 3 =&gt; 6"></textarea>
+          <input id="pbPdf" type="file" accept="application/pdf" class="mb-2">
+          <button id="createPb" class="px-3 py-1 rounded-lg bg-indigo-600 text-white">สร้างโจทย์</button>
+        </div>
+      </div>
+
+      <div class="card p-3">
+        <h3 class="font-semibold mb-2">ผู้ใช้</h3>
+        <div id="userList" class="text-sm"></div>
+      </div>
+
+      <div class="card p-3">
+        <h3 class="font-semibold mb-2">ซับมิททั้งหมด</h3>
+        <div id="allSubs" class="text-sm"></div>
+      </div>
+
+      <div class="card p-3">
+        <h3 class="font-semibold mb-2">โจทย์ทั้งหมด</h3>
+        <div id="pbList" class="text-sm"></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/public/app.js"></script>
+</body>
+</html>

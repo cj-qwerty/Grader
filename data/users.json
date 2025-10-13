@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1ff920ab-8b6e-4809-97de-78fcf717a4f4",
+    "username": "admin",
+    "passhash": "$2a$10$23qQ.fPhBUmErOfyNlHU9uY/cgtZ43ZYAK4R6v2cny1.HyMPy0636",
+    "isAdmin": true
+  },
+  {
+    "id": "19782b09-307a-4261-b468-db95bb56f407",
+    "username": "cjqwerty",
+    "passhash": "$2a$10$uu/2O26xq0eodyntzm.TLOKM0b095S96fzr1CwimWMWCh8KMRtcI2",
+    "isAdmin": false
+  },
+  {
+    "id": "d43b51fc-2afd-4adf-9242-ac3f6477c7cc",
+    "username": "1234",
+    "passhash": "$2a$10$z5zSKpFp4p4dMSEb4SGgkels/A/wXEhg4DtzV9sdJcw0Sb1Ra5CA.",
+    "isAdmin": false
+  },
+  {
+    "id": "bcaefaa1-9e8f-4e82-b2b7-b785a672eb91",
+    "username": "pakorn",
+    "passhash": "$2a$10$h7ePg.EJ1HcNE4LGOUI.beNiFRAVBXDEBrFDwsnM211Kd9AOo7qKm",
+    "isAdmin": true
+  }
+]
