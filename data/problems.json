@@ -107,5 +107,279 @@
       }
     ],
     "createdAt": 1760323513275
+  },
+  {
+    "id": "a56a9844-56f5-47e8-8c5a-0f2739c75a7b",
+    "title": "หาร 9 ลงตัว",
+    "projectId": "826b1302-04a1-45a3-8b3b-2c9752a8bded",
+    "pdfUrl": "/pdf/1760416026540_à¸«à¸²à¸£_9_à¸¥à¸à¸à¸±à¸§.pdf",
+    "tests": [
+      {
+        "input": "9",
+        "expected": "yes",
+        "line": 1
+      },
+      {
+        "input": "18",
+        "expected": "yes",
+        "line": 2
+      },
+      {
+        "input": "27",
+        "expected": "yes",
+        "line": 3
+      },
+      {
+        "input": "36",
+        "expected": "yes",
+        "line": 4
+      },
+      {
+        "input": "45",
+        "expected": "yes",
+        "line": 5
+      },
+      {
+        "input": "54",
+        "expected": "yes",
+        "line": 6
+      },
+      {
+        "input": "63",
+        "expected": "yes",
+        "line": 7
+      },
+      {
+        "input": "72",
+        "expected": "yes",
+        "line": 8
+      },
+      {
+        "input": "81",
+        "expected": "yes",
+        "line": 9
+      },
+      {
+        "input": "90",
+        "expected": "yes",
+        "line": 10
+      },
+      {
+        "input": "99",
+        "expected": "yes",
+        "line": 11
+      },
+      {
+        "input": "108",
+        "expected": "yes",
+        "line": 12
+      },
+      {
+        "input": "135",
+        "expected": "yes",
+        "line": 13
+      },
+      {
+        "input": "153",
+        "expected": "yes",
+        "line": 14
+      },
+      {
+        "input": "162",
+        "expected": "yes",
+        "line": 15
+      },
+      {
+        "input": "189",
+        "expected": "yes",
+        "line": 16
+      },
+      {
+        "input": "243",
+        "expected": "yes",
+        "line": 17
+      },
+      {
+        "input": "252",
+        "expected": "yes",
+        "line": 18
+      },
+      {
+        "input": "270",
+        "expected": "yes",
+        "line": 19
+      },
+      {
+        "input": "333",
+        "expected": "yes",
+        "line": 20
+      },
+      {
+        "input": "360",
+        "expected": "yes",
+        "line": 21
+      },
+      {
+        "input": "369",
+        "expected": "yes",
+        "line": 22
+      },
+      {
+        "input": "432",
+        "expected": "yes",
+        "line": 23
+      },
+      {
+        "input": "450",
+        "expected": "yes",
+        "line": 24
+      },
+      {
+        "input": "567",
+        "expected": "yes",
+        "line": 25
+      },
+      {
+        "input": "603",
+        "expected": "yes",
+        "line": 26
+      },
+      {
+        "input": "630",
+        "expected": "yes",
+        "line": 27
+      },
+      {
+        "input": "639",
+        "expected": "yes",
+        "line": 28
+      },
+      {
+        "input": "657",
+        "expected": "yes",
+        "line": 29
+      },
+      {
+        "input": "675",
+        "expected": "yes",
+        "line": 30
+      },
+      {
+        "input": "693",
+        "expected": "yes",
+        "line": 31
+      },
+      {
+        "input": "720",
+        "expected": "yes",
+        "line": 32
+      },
+      {
+        "input": "729",
+        "expected": "yes",
+        "line": 33
+      },
+      {
+        "input": "756",
+        "expected": "yes",
+        "line": 34
+      },
+      {
+        "input": "801",
+        "expected": "yes",
+        "line": 35
+      },
+      {
+        "input": "900",
+        "expected": "yes",
+        "line": 36
+      },
+      {
+        "input": "909",
+        "expected": "yes",
+        "line": 37
+      },
+      {
+        "input": "918",
+        "expected": "yes",
+        "line": 38
+      },
+      {
+        "input": "936",
+        "expected": "yes",
+        "line": 39
+      },
+      {
+        "input": "945",
+        "expected": "yes",
+        "line": 40
+      },
+      {
+        "input": "954",
+        "expected": "yes",
+        "line": 41
+      },
+      {
+        "input": "972",
+        "expected": "yes",
+        "line": 42
+      },
+      {
+        "input": "981",
+        "expected": "yes",
+        "line": 43
+      },
+      {
+        "input": "990",
+        "expected": "yes",
+        "line": 44
+      },
+      {
+        "input": "999",
+        "expected": "yes",
+        "line": 45
+      },
+      {
+        "input": "1008",
+        "expected": "yes",
+        "line": 46
+      },
+      {
+        "input": "1035",
+        "expected": "yes",
+        "line": 47
+      },
+      {
+        "input": "1053",
+        "expected": "yes",
+        "line": 48
+      },
+      {
+        "input": "1080",
+        "expected": "yes",
+        "line": 49
+      },
+      {
+        "input": "1089",
+        "expected": "yes",
+        "line": 50
+      },
+      {
+        "input": "12345678901234567890123456789012345678901234567890",
+        "expected": "yes",
+        "line": 51
+      },
+      {
+        "input": "98765432109876543210987654321098765432109876543210",
+        "expected": "yes",
+        "line": 52
+      },
+      {
+        "input": "99900099900099900099900099900099900099900099900099",
+        "expected": "yes",
+        "line": 53
+      }
+    ],
+    "createdAt": 1760416026541
   }
 ]

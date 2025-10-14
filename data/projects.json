@@ -4,5 +4,11 @@
     "name": "ex",
     "slug": "ex",
     "enabled": true
+  },
+  {
+    "id": "7fd53355-4654-4d35-b3ab-2994b814c35e",
+    "name": "test",
+    "slug": "test",
+    "enabled": false
   }
 ]
