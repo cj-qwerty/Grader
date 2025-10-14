@@ -4,3 +4,4 @@ nohup: ignoring input
 > NODE_ENV=development node server.js
 
 Grader running on http://0.0.0.0:3000
+Killed
